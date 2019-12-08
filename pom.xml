@@ -10,7 +10,7 @@
 
     <groupId>org.abdul</groupId>
     <artifactId>abdul-pet-clinic</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>abdul-pet-clinic</name>
     <description>Abdul Spring Pet Clinic Project</description>
 
@@ -47,7 +47,7 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/abdulkatheer/abdul-spring-pet-clinic.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>0.0.1</tag>
   </scm>
 
     <repositories>
