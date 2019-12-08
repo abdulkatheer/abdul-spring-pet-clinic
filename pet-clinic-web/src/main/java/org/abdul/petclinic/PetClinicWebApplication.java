@@ -1,13 +1,13 @@
-package org.abdul.abdulpetclinic;
+package org.abdul.petclinic;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AbdulPetClinicApplication {
+public class PetClinicWebApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AbdulPetClinicApplication.class, args);
+        SpringApplication.run(PetClinicWebApplication.class, args);
     }
 
 }
