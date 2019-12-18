@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/pets")
-public class PetController {
+@RequestMapping("/")
+public class PetClinicController {
 
    private PetService petService;
 
-   public PetController(PetService petService) {
+   public PetClinicController(PetService petService) {
       this.petService = petService;
    }
 
