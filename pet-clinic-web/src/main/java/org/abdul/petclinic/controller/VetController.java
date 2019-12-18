@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/vets")
 public class VetController {
 
-   private VetService vetService;
+    private VetService vetService;
 
-   public VetController(VetService vetService) {
-      this.vetService = vetService;
-   }
+    public VetController(VetService vetService) {
+        this.vetService = vetService;
+    }
 
-   @GetMapping({"", "/", "/index", "/index.htm", "/index.html"})
-   public String listOfVets(Model response) {
-      response.addAttribute("vets", vetService.findAll());
-      return "vets/index";
-   }
+    @GetMapping({"", "/", "/index", "/index.htm", "/index.html"})
+    public String listOfVets(Model response) {
+        response.addAttribute("vets", vetService.findAll());
+        return "vets/index";
+    }
 
 }

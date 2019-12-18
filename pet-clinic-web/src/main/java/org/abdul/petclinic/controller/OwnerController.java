@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/owners")
 public class OwnerController {
 
-   private OwnerService ownerService;
+    private OwnerService ownerService;
 
-   public OwnerController(OwnerService ownerService) {
-      this.ownerService = ownerService;
-   }
+    public OwnerController(OwnerService ownerService) {
+        this.ownerService = ownerService;
+    }
 
-   @GetMapping({"", "/", "/index", "/index.html", "/index.htm"})
-   public String listOwners(Model response) {
-      response.addAttribute("owners", ownerService.findAll());
-      return "owners/index";
-   }
+    @GetMapping({"", "/", "/index", "/index.html", "/index.htm"})
+    public String listOwners(Model response) {
+        response.addAttribute("owners", ownerService.findAll());
+        return "owners/index";
+    }
 
 }

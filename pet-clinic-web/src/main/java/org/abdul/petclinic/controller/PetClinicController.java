@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class PetClinicController {
 
-   private PetService petService;
+    private PetService petService;
 
-   public PetClinicController(PetService petService) {
-      this.petService = petService;
-   }
+    public PetClinicController(PetService petService) {
+        this.petService = petService;
+    }
 
-   @GetMapping({"", "/", "/index", "/index.htm", "/index.html"})
-   public String listOfPets(Model response) {
-      response.addAttribute("pets", petService.findAll());
-      return "pets/index";
-   }
+    @GetMapping({"", "/", "/index", "/index.htm", "/index.html"})
+    public String listOfPets(Model response) {
+        response.addAttribute("pets", petService.findAll());
+        return "pets/index";
+    }
 
 }
