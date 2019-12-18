@@ -1,7 +1,5 @@
 package org.abdul.petclinic.bootstrap;
 
-import org.abdul.petclinic.map.OwnerServiceMap;
-import org.abdul.petclinic.map.VetServiceMap;
 import org.abdul.petclinic.model.Owner;
 import org.abdul.petclinic.model.Vet;
 import org.abdul.petclinic.service.OwnerService;
