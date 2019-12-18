@@ -1,32 +1,51 @@
 package org.abdul.petclinic.map;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import org.abdul.petclinic.model.BaseEntity;
 
-public abstract class AbstractMapService<T, ID> {
-   protected Map<ID, T> data = new HashMap<>();
+import java.util.*;
 
-   Set<T> findAll() {
-      return new HashSet<>(data.values());
-   }
+public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> {
+    protected Map<Long, T> data = new HashMap<>();
 
-   T findById(ID id) {
-      return data.get(id);
-   }
+    Set<T> findAll() {
+        return new HashSet<>(data.values());
+    }
 
-   T save(ID id, T object) {
-      data.put(id, object);
+    T findById(ID id) {
+        return data.get(id);
+    }
 
-      return object;
-   }
+    T save(T object) {
+        if (object != null) {
+            if (object.getId() == null) {
+                object.setId(getNextId());
+            }
 
-   void deleteById(ID id) {
-      data.remove(id);
-   }
+            data.put(object.getId(), object);
+        } else {
+            throw new RuntimeException("Object cannot be null");
+        }
 
-   void delete(T object) {
-      data.entrySet().removeIf(entry -> entry.getValue().equals(object));
-   }
+        return object;
+    }
+
+    void deleteById(ID id) {
+        data.remove(id);
+    }
+
+    void delete(T object) {
+        data.entrySet().removeIf(entry -> entry.getValue().equals(object));
+    }
+
+    private Long getNextId() {
+        Long nextId;
+
+        try {
+            nextId = Collections.max(data.keySet()) + 1;
+        } catch (NoSuchElementException e) {
+            nextId = 1L;
+        }
+
+        return nextId;
+    }
 }
