@@ -40,7 +40,7 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> implements 
             throw new NullPointerException("Object cannot be null");
         } else {
             //if has pets
-            if (owner.getPets() != null) {
+            if (owner.getPets().size() > 0) {
                 owner.getPets().forEach(pet -> {
                     if (pet.getPetType() == null) {
                         throw new RuntimeException("PetType is required");

@@ -1,11 +1,9 @@
 package org.abdul.petclinic.bootstrap;
 
-import org.abdul.petclinic.model.Owner;
-import org.abdul.petclinic.model.Pet;
-import org.abdul.petclinic.model.PetType;
-import org.abdul.petclinic.model.Vet;
+import org.abdul.petclinic.model.*;
 import org.abdul.petclinic.service.OwnerService;
 import org.abdul.petclinic.service.PetTypeService;
+import org.abdul.petclinic.service.SpecialityService;
 import org.abdul.petclinic.service.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -17,22 +15,22 @@ public class DataLoader implements CommandLineRunner {
     private OwnerService ownerService;
     private VetService vetService;
     private PetTypeService petTypeService;
+    private SpecialityService specialityService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.specialityService = specialityService;
     }
 
     @Override
     public void run(String... args) throws Exception {
         PetType dog = new PetType();
         dog.setName("Dog");
-        PetType savedDogPetType = petTypeService.save(dog);
 
         PetType cat = new PetType();
         cat.setName("Cat");
-        PetType savedCatPetType = petTypeService.save(cat);
 
         Owner owner1 = new Owner();
         owner1.setFirstName("Abdul Katheer");
@@ -85,13 +83,25 @@ public class DataLoader implements CommandLineRunner {
         rocky.setOwner(owner3);
         owner3.getPets().add(rocky);
 
+        Speciality radiology = new Speciality();
+        radiology.setDescription("Radiology");
+
+        Speciality surgery = new Speciality();
+        surgery.setDescription("Surgery");
+
+        Speciality dentistry = new Speciality();
+        dentistry.setDescription("dentistry");
+
         Vet vet1 = new Vet();
         vet1.setFirstName("Hari");
         vet1.setLastName("K");
+        vet1.getSpecialities().add(radiology);
+        vet1.getSpecialities().add(surgery);
 
         Vet vet2 = new Vet();
         vet2.setFirstName("Nirmal");
         vet2.setLastName("G");
+        vet2.getSpecialities().add(dentistry);
 
         ownerService.save(owner1);
         ownerService.save(owner2);
