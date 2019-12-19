@@ -1,6 +1,7 @@
 package org.abdul.petclinic.bootstrap;
 
 import org.abdul.petclinic.model.Owner;
+import org.abdul.petclinic.model.Pet;
 import org.abdul.petclinic.model.PetType;
 import org.abdul.petclinic.model.Vet;
 import org.abdul.petclinic.service.OwnerService;
@@ -8,6 +9,8 @@ import org.abdul.petclinic.service.PetTypeService;
 import org.abdul.petclinic.service.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -34,14 +37,53 @@ public class DataLoader implements CommandLineRunner {
         Owner owner1 = new Owner();
         owner1.setFirstName("Abdul Katheer");
         owner1.setLastName("M");
+        owner1.setAddress("221B, Baker Street");
+        owner1.setCity("London");
+        owner1.setPincode("613891");
+        owner1.setMobileNo("9998391993");
+
+        Pet jimmy = new Pet();
+        jimmy.setName("Jimmy");
+        jimmy.setPetType(dog);
+        jimmy.setBirthDate(LocalDate.of(2018, 12, 11));
+
+        //Association
+        jimmy.setOwner(owner1);
+        owner1.getPets().add(jimmy);
 
         Owner owner2 = new Owner();
         owner2.setFirstName("Dhanalakshmi");
         owner2.setLastName("N");
+        owner2.setAddress("126, Layman St");
+        owner2.setCity("Silicon Valley");
+        owner2.setPincode("927201");
+        owner2.setMobileNo("7399279199");
+
+        Pet pussy = new Pet();
+        pussy.setName("Pussy");
+        pussy.setPetType(cat);
+        pussy.setBirthDate(LocalDate.of(2019, 1, 12));
+
+        //Association
+        pussy.setOwner(owner2);
+        owner2.getPets().add(pussy);
 
         Owner owner3 = new Owner();
         owner3.setFirstName("Vinothkumar");
         owner3.setLastName("N");
+        owner3.setAddress("321, Moogambigai Nagar");
+        owner3.setCity("Dindigul");
+        owner3.setPincode("624005");
+        owner3.setMobileNo("9994103083");
+
+        Pet rocky = new Pet();
+        rocky.setName("Rocky");
+        rocky.setBirthDate(LocalDate.of(2018, 11, 13));
+        rocky.setPetType(dog);
+
+        //Association
+        rocky.setOwner(owner3);
+        owner3.getPets().add(rocky);
 
         Vet vet1 = new Vet();
         vet1.setFirstName("Hari");
