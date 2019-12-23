@@ -103,9 +103,16 @@ public class DataLoader implements CommandLineRunner {
         vet2.setLastName("G");
         vet2.getSpecialities().add(dentistry);
 
+        petTypeService.save(dog);
+        petTypeService.save(cat);
+
         ownerService.save(owner1);
         ownerService.save(owner2);
         ownerService.save(owner3);
+
+        specialityService.save(radiology);
+        specialityService.save(dentistry);
+        specialityService.save(surgery);
 
         vetService.save(vet1);
         vetService.save(vet2);
