@@ -1,4 +1,4 @@
-package org.abdul.petclinic.map;
+package org.abdul.petclinic.service.map;
 
 import org.abdul.petclinic.model.Speciality;
 import org.abdul.petclinic.service.SpecialityService;

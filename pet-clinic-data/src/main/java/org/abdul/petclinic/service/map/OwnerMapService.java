@@ -1,4 +1,4 @@
-package org.abdul.petclinic.map;
+package org.abdul.petclinic.service.map;
 
 import org.abdul.petclinic.model.Owner;
 import org.abdul.petclinic.model.Pet;
