@@ -11,8 +11,8 @@ import java.util.Set;
 
 @Service
 public class OwnerMapService extends AbstractMapService<Owner, Long> implements OwnerService {
-    private PetService petService;
-    private PetTypeService petTypeService;
+    private final PetService petService;
+    private final PetTypeService petTypeService;
 
     public OwnerMapService(PetService petService, PetTypeService petTypeService) {
         this.petService = petService;
