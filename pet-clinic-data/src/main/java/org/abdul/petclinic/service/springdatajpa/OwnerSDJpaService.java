@@ -5,6 +5,7 @@ import org.abdul.petclinic.repository.OwnerRepository;
 import org.abdul.petclinic.service.OwnerService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,6 +38,7 @@ public class OwnerSDJpaService implements OwnerService {
     }
 
     @Override
+    @Transactional
     public Owner save(Owner owner) {
         return ownerRepository.save(owner);
     }
