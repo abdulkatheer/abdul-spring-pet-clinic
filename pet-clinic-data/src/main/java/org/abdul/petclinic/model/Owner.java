@@ -23,7 +23,7 @@ public class Owner extends Person {
         this.city = city;
         this.pincode = pincode;
         this.mobileNo = mobileNo;
-        this.pets = pets;
+        this.pets = pets == null ? new HashSet<>() : pets;
     }
 
     @Column(name = "address")

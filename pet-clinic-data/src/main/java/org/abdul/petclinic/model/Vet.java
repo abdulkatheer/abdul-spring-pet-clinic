@@ -17,7 +17,7 @@ public class Vet extends Person {
     @Builder
     public Vet(Long id, String firstName, String lastName, Set<Speciality> specialities) {
         super(id, firstName, lastName);
-        this.specialities = specialities;
+        this.specialities = specialities == null ? new HashSet<>() : specialities;
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
