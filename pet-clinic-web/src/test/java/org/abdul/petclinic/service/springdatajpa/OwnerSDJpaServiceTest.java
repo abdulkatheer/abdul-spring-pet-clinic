@@ -11,7 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
-import static java.util.Optional.ofNullable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
@@ -32,17 +31,17 @@ class OwnerSDJpaServiceTest {
     @Test
     void shouldReturnOwnerWhenOwnerWithGivenLastNameExists() {
         //given
-        when(ownerRepository.findByLastName("Last Name")).thenReturn(ofNullable(inputOwner));
+        when(ownerRepository.findByLastName("Last Name")).thenReturn(Collections.singletonList(inputOwner));
         //then
-        assertEquals(inputOwner, ownerSDJpaService.findByLastName("Last Name"));
+        assertEquals(inputOwner, ownerSDJpaService.findByLastName("Last Name").get(0));
     }
 
     @Test
     void shouldReturnNullWhenOwnerWithGivenLastNameNotExists() {
         //given
-        when(ownerRepository.findByLastName("Last Name")).thenReturn(Optional.empty());
+        when(ownerRepository.findByLastName("Last Name")).thenReturn(Collections.emptyList());
         //then
-        assertNull(ownerSDJpaService.findByLastName("Last Name"));
+        assertEquals(0, ownerSDJpaService.findByLastName("Last Name").size());
     }
 
     @Test

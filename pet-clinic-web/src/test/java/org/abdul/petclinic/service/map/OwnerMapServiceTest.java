@@ -142,12 +142,12 @@ class OwnerMapServiceTest {
         ownerMapService.save(owner1);
         ownerMapService.save(owner2);
         //then
-        assertEquals(owner1, ownerMapService.findByLastName(OWNER1_LAST_NAME));
-        assertEquals(owner2, ownerMapService.findByLastName(OWNER2_LAST_NAME));
+        assertEquals(owner1, ownerMapService.findByLastName(OWNER1_LAST_NAME).get(0));
+        assertEquals(owner2, ownerMapService.findByLastName(OWNER2_LAST_NAME).get(0));
     }
 
     @Test
-    public void shouldReturnNullWhenLastNameGivenIsNotExist() {
-        assertNull(ownerMapService.findByLastName(OWNER1_LAST_NAME));
+    public void shouldReturnEmptyListWhenLastNameGivenIsNotExist() {
+        assertEquals(0, ownerMapService.findByLastName(OWNER1_LAST_NAME).size());
     }
 }

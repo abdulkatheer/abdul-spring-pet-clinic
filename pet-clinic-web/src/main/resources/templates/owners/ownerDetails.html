@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'owners')}" lang="en">
 
 <body>
 
@@ -14,30 +14,24 @@
     </tr>
     <tr>
         <th>Address</th>
-        <td th:text="*{address}"/>
-        </td>
+        <td th:text="*{address}"></td>
     </tr>
     <tr>
         <th>City</th>
-        <td th:text="*{city}"/>
-        </td>
+        <td th:text="*{city}"></td>
     </tr>
     <tr>
         <th>Pincode</th>
-        <td th:text="*{pincode}"/>
-        </td>
+        <td th:text="*{pincode}"></td>
     </tr>
     <tr>
         <th>Mobile No</th>
-        <td th:text="*{mobileNo}"/>
-        </td>
+        <td th:text="*{mobileNo}"></td>
     </tr>
 </table>
 
-<a th:href="@{{id}/edit(id=${owner.id})}" class="btn btn-default">Edit
-    Owner</a>
-<a th:href="@{{id}/pets/new(id=${owner.id})}" class="btn btn-default">Add
-    New Pet</a>
+<a th:href="@{{id}/edit(id=${owner.id})}" class="btn btn-default">Edit Owner</a>
+<a th:href="@{{id}/pets/new(id=${owner.id})}" class="btn btn-default">Add New Pet</a>
 
 <br/>
 <br/>
@@ -50,14 +44,11 @@
         <td valign="top">
             <dl class="dl-horizontal">
                 <dt>Name</dt>
-                <dd th:text="${pet.name}"/>
-                </dd>
+                <dd th:text="${pet.name}"></dd>
                 <dt>Birth Date</dt>
-                <dd th:text="${#temporals.format(pet.birthDate, 'yyyy-MM-dd')}"/>
-                </dd>
+                <dd th:text="${#temporals.format(pet.birthDate, 'yyyy-MM-dd')}"></dd>
                 <dt>Type</dt>
-                <dd th:text="${pet.petType.name}"/>
-                </dd>
+                <dd th:text="${pet.petType.name}"></dd>
             </dl>
         </td>
         <td valign="top">
@@ -73,12 +64,8 @@
                     <td th:text="${visit?.description}"></td>
                 </tr>
                 <tr>
-                    <td><a
-                            th:href="@{{ownerId}/pets/{petId}/edit(ownerId=${owner.id},petId=${pet.id})}">Edit
-                        Pet</a></td>
-                    <td><a
-                            th:href="@{{ownerId}/pets/{petId}/visits/new(ownerId=${owner.id},petId=${pet.id})}">Add
-                        Visit</a></td>
+                    <td><a th:href="@{{ownerId}/pets/{petId}/edit(ownerId=${owner.id},petId=${pet.id})}">Edit Pet</a></td>
+                    <td><a th:href="@{{ownerId}/pets/{petId}/visits/new(ownerId=${owner.id},petId=${pet.id})}">Add Visit</a></td>
                 </tr>
             </table>
         </td>

@@ -12,17 +12,19 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
 class OwnerControllerTest {
+    private static final String LAST_NAME = "Mohamed Amsa";
     @Mock
     private OwnerService ownerService;
     private Set<Owner> owners;
@@ -63,5 +65,63 @@ class OwnerControllerTest {
                 .andExpect(view().name("owners/ownerDetails"))
                 .andExpect(model().attribute("owner", hasProperty("id", is(1L))))
                 .andExpect(model().attribute("owner", hasProperty("firstName", is("Abdul"))));
+    }
+
+    @Test
+    public void findOwners() throws Exception {
+        //when
+        mockMvc.perform(get("/owners/find"))
+                .andExpect(status().is(200))
+                .andExpect(view().name("owners/findOwners"));
+    }
+
+    @Test
+    public void shouldReturnNotFoundErrorWhenOwnersNotFound() throws Exception {
+        //given
+        Owner owner = Owner.builder().lastName(LAST_NAME).build();
+        when(ownerService.findByLastName(LAST_NAME)).thenReturn(Collections.emptyList());
+
+        //when
+        mockMvc.perform(get("/owners/selected").param("lastName", LAST_NAME))
+                .andExpect(status().is(200))
+                .andExpect(view().name("owners/findOwners"))
+                .andExpect(model().hasErrors());
+    }
+
+    @Test
+    public void shouldForwardToDisplaySingleOwnerDetailsWhenSingleOwnerFound() throws Exception {
+        //given
+        Owner owner = Owner.builder()
+                .id(1L)
+                .firstName("Abdul Katheer")
+                .lastName(LAST_NAME)
+                .build();
+        when(ownerService.findByLastName("Mohamed Amsa")).thenReturn(Collections.singletonList(owner));
+
+        //when
+        mockMvc.perform(get("/owners/selected").param("lastName", LAST_NAME))
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    public void shouldReturnViewForListingOwnerDetailsWhenMultipleOwnerFound() throws Exception {
+        //given
+        Owner owner1 = Owner.builder()
+                .id(1L)
+                .firstName("Abdul Katheer")
+                .lastName(LAST_NAME)
+                .build();
+        Owner owner2 = Owner.builder()
+                .id(2L)
+                .firstName("Faizal Ahamed")
+                .lastName(LAST_NAME)
+                .build();
+        when(ownerService.findByLastName(LAST_NAME)).thenReturn(Arrays.asList(owner1, owner2));
+
+        //when
+        mockMvc.perform(get("/owners/selected").param("lastName", LAST_NAME))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(model().attribute("selections", hasSize(2)))
+                .andExpect(view().name("owners/ownersList"));
     }
 }
