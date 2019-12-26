@@ -68,7 +68,7 @@ class OwnerControllerTest {
     }
 
     @Test
-    public void findOwners() throws Exception {
+    public void initFindOwnerForm() throws Exception {
         //when
         mockMvc.perform(get("/owners/find"))
                 .andExpect(status().is(200))

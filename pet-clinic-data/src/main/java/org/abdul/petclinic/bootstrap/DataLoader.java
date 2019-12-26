@@ -92,6 +92,25 @@ public class DataLoader implements CommandLineRunner {
         //Association
         owner3.setPets(Collections.singleton(rocky));
 
+        Owner owner4 = Owner.builder()
+                .firstName("Faizal Ahamed")
+                .lastName("Mohamed Amsa")
+                .address("4/167, Walt Disney St")
+                .city("Downtown")
+                .pincode("612782")
+                .mobileNo("8388288821")
+                .build();
+
+        Pet tommy = Pet.builder()
+                .name("Tommy")
+                .petType(dog)
+                .owner(owner4)
+                .birthDate(LocalDate.of(2019, 12, 11))
+                .build();
+
+        //Association
+        owner4.setPets(Collections.singleton(tommy));
+
         Speciality radiology = Speciality.builder()
                 .description("Radiology")
                 .build();
@@ -122,6 +141,7 @@ public class DataLoader implements CommandLineRunner {
         ownerService.save(owner1);
         ownerService.save(owner2);
         ownerService.save(owner3);
+        ownerService.save(owner4);
 
         specialityService.save(radiology);
         specialityService.save(dentistry);

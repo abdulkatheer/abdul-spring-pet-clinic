@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,19 +30,24 @@ public class OwnerController {
     }
 
     @GetMapping("/find")
-    public ModelAndView findOwner() {
+    public ModelAndView initFindOwnerForm() {
         ModelAndView modelAndView = new ModelAndView("owners/findOwners");
         modelAndView.addObject(new Owner());
         return modelAndView;
     }
 
     @GetMapping("/selected")
-    public String processFindForm(Owner owner, BindingResult result, Model response) {
+    public String processFindOwnerForm(Owner owner, BindingResult result, Model response) {
         if (owner.getLastName() == null) {
             owner.setLastName("");
         }
 
-        List<Owner> owners = ownerService.findByLastName(owner.getLastName());
+        List<Owner> owners;
+        if (owner.getLastName().equals("")) {
+            owners = new ArrayList<>(ownerService.findAll());
+        } else {
+            owners = ownerService.findByLastName(owner.getLastName());
+        }
 
         if (owners.isEmpty()) {
             result.rejectValue("lastName", "notFound", "Not Found");

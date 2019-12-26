@@ -129,7 +129,7 @@ class OwnerMapServiceTest {
     }
 
     @Test
-    public void shoudlReturnNullIfOwnerNotExists() {
+    public void shouldReturnNullIfOwnerNotExists() {
         //then
         assertNull(ownerMapService.findById(1L));
     }
