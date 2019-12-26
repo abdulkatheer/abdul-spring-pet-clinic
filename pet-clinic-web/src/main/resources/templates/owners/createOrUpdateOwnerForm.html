@@ -4,25 +4,21 @@
 <body>
 
 <h2>Owner</h2>
+
+<!--/*@thymesVar id="owner" type="org.abdul.petclinic.model.Owner"*/-->
 <form th:object="${owner}" class="form-horizontal" id="add-owner-form" method="post">
     <div class="form-group has-feedback">
-        <input
-                th:replace="~{fragments/inputField :: input ('First Name', 'firstName', 'text')}"/>
-        <input
-                th:replace="~{fragments/inputField :: input ('Last Name', 'lastName', 'text')}"/>
-        <input
-                th:replace="~{fragments/inputField :: input ('Address', 'address', 'text')}"/>
-        <input
-                th:replace="~{fragments/inputField :: input ('City', 'city', 'text')}"/>
-        <input
-                th:replace="~{fragments/inputField :: input ('Telephone', 'telephone', 'text')}"/>
+        <input th:replace="~{fragments/inputField :: input ('First Name', 'firstName', 'text')}"/>
+        <input th:replace="~{fragments/inputField :: input ('Last Name', 'lastName', 'text')}"/>
+        <input th:replace="~{fragments/inputField :: input ('Address', 'address', 'text')}"/>
+        <input th:replace="~{fragments/inputField :: input ('City', 'city', 'text')}"/>
+        <input th:replace="~{fragments/inputField :: input ('Pincode', 'pincode', 'text')}"/>
+        <input th:replace="~{fragments/inputField :: input ('Mobile No', 'mobileNo', 'text')}"/>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button
-                    th:with="text=${owner['new']} ? 'Add Owner' : 'Update Owner'"
-                    class="btn btn-default" type="submit" th:text="${text}">Add
-                Owner
+            <button th:with="text=${owner['new']} ? 'Add Owner' : 'Update Owner'" class="btn btn-default"
+                    type="submit" th:text="${text}">Add Owner
             </button>
         </div>
     </div>

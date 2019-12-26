@@ -5,11 +5,11 @@ import org.abdul.petclinic.service.OwnerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +17,17 @@ import java.util.List;
 @RequestMapping("/owners")
 public class OwnerController {
 
+    private static final String CREATE_OR_UPDATE_OWNER_FORM = "owners/createOrUpdateOwnerForm";
+    private static final String VIEW_OWNER_REDIRECT_PREFIX = "redirect:/owners/";
     private final OwnerService ownerService;
 
     public OwnerController(OwnerService ownerService) {
         this.ownerService = ownerService;
+    }
+
+    @InitBinder
+    public void setAllowedFields(WebDataBinder webDataBinder) {
+        webDataBinder.setDisallowedFields("id");
     }
 
     @GetMapping({"", "/", "/index", "/index.html", "/index.htm"})
@@ -53,7 +60,7 @@ public class OwnerController {
             result.rejectValue("lastName", "notFound", "Not Found");
             return "owners/findOwners";
         } else if (owners.size() == 1) {
-            return "redirect:/owners/" + owners.get(0).getId();
+            return VIEW_OWNER_REDIRECT_PREFIX + owners.get(0).getId();
         } else {
             response.addAttribute("selections", owners);
             return "owners/ownersList";
@@ -67,4 +74,41 @@ public class OwnerController {
         modelAndView.addObject(owner);
         return modelAndView;
     }
+
+    @GetMapping("/new")
+    public String initCreateForm(Model response) {
+        response.addAttribute("owner", new Owner());
+        return CREATE_OR_UPDATE_OWNER_FORM;
+    }
+
+    @PostMapping("/new")
+    public String processCreateForm(@Valid Owner owner, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return CREATE_OR_UPDATE_OWNER_FORM;
+        }
+        ownerService.save(owner);
+        return VIEW_OWNER_REDIRECT_PREFIX + owner.getId();
+    }
+
+    @GetMapping("/{id}/edit")
+    public String initUpdateForm(@PathVariable("id") Long id, Model response) {
+        Owner owner = ownerService.findById(id);
+        if (owner == null) {
+            return "redirect:/owners/new";
+        }
+        response.addAttribute("owner", owner);
+        return CREATE_OR_UPDATE_OWNER_FORM;
+    }
+
+    @PostMapping("/{id}/edit")
+    public String processUpdateForm(@Valid Owner owner, @PathVariable("id") Long id, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return CREATE_OR_UPDATE_OWNER_FORM;
+        } else {
+            owner.setId(id);
+            ownerService.save(owner);
+            return VIEW_OWNER_REDIRECT_PREFIX + owner.getId();
+        }
+    }
+
 }
