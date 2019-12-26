@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -21,8 +22,8 @@ public class OwnerSDJpaService implements OwnerService {
     }
 
     @Override
-    public Owner findByLastName(String lastName) {
-        return ownerRepository.findByLastName(lastName).orElse(null);
+    public List<Owner> findByLastName(String lastName) {
+        return ownerRepository.findByLastName(lastName);
     }
 
     @Override
