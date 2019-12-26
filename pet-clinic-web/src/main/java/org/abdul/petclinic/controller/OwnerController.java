@@ -46,7 +46,7 @@ public class OwnerController {
         if (owner.getLastName().equals("")) {
             owners = new ArrayList<>(ownerService.findAll());
         } else {
-            owners = ownerService.findByLastName(owner.getLastName());
+            owners = ownerService.findByLastNameLike(owner.getLastName());
         }
 
         if (owners.isEmpty()) {

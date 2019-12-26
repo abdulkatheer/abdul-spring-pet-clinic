@@ -27,6 +27,11 @@ public class OwnerSDJpaService implements OwnerService {
     }
 
     @Override
+    public List<Owner> findByLastNameLike(String lastNamePattern) {
+        return ownerRepository.findByLastNameIsLike("%" + lastNamePattern + "%");
+    }
+
+    @Override
     public Set<Owner> findAll() {
         return StreamSupport
                 .stream(ownerRepository.findAll().spliterator(), false)

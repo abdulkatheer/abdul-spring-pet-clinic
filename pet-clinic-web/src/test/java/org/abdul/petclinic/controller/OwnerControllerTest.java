@@ -79,7 +79,7 @@ class OwnerControllerTest {
     public void shouldReturnNotFoundErrorWhenOwnersNotFound() throws Exception {
         //given
         Owner owner = Owner.builder().lastName(LAST_NAME).build();
-        when(ownerService.findByLastName(LAST_NAME)).thenReturn(Collections.emptyList());
+        when(ownerService.findByLastNameLike(LAST_NAME)).thenReturn(Collections.emptyList());
 
         //when
         mockMvc.perform(get("/owners/selected").param("lastName", LAST_NAME))
@@ -96,7 +96,7 @@ class OwnerControllerTest {
                 .firstName("Abdul Katheer")
                 .lastName(LAST_NAME)
                 .build();
-        when(ownerService.findByLastName("Mohamed Amsa")).thenReturn(Collections.singletonList(owner));
+        when(ownerService.findByLastNameLike("Mohamed Amsa")).thenReturn(Collections.singletonList(owner));
 
         //when
         mockMvc.perform(get("/owners/selected").param("lastName", LAST_NAME))
@@ -116,7 +116,7 @@ class OwnerControllerTest {
                 .firstName("Faizal Ahamed")
                 .lastName(LAST_NAME)
                 .build();
-        when(ownerService.findByLastName(LAST_NAME)).thenReturn(Arrays.asList(owner1, owner2));
+        when(ownerService.findByLastNameLike(LAST_NAME)).thenReturn(Arrays.asList(owner1, owner2));
 
         //when
         mockMvc.perform(get("/owners/selected").param("lastName", LAST_NAME))
