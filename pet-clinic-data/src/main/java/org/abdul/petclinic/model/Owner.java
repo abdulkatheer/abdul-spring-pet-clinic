@@ -40,4 +40,26 @@ public class Owner extends Person {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Pet> pets = new HashSet<>();
+
+    public void addPet(Pet pet) {
+        if (pet.isNew()) {
+            addPetInternal(pet);
+        }
+        pet.setOwner(this);
+    }
+
+    public Pet getPet(String petName, boolean ignoreNewPet) {
+        return this.pets.stream()
+                .filter(pet -> !ignoreNewPet || !pet.isNew())
+                .filter(pet -> pet.getName().equalsIgnoreCase(petName))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private void addPetInternal(Pet pet) {
+        if (pets == null) {
+            pets = new HashSet<>();
+        }
+        pets.add(pet);
+    }
 }
