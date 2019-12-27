@@ -73,8 +73,7 @@ public class PetController {
         log.info("Inside Process form : {}", owner);
         owner.addPet(pet);
         if (bindingResult.hasErrors()) {
-            log.info("Errors. So returning to same page!");
-            model.addAttribute("pet", pet);
+            log.info("Pet has Errors. So returning to same page!");
             return CREATE_OR_UPDATE_PET_FORM;
         }
 
@@ -92,8 +91,7 @@ public class PetController {
     @PostMapping("pets/{petId}/edit")
     public String processUpdateForm(@Valid Pet pet, BindingResult bindingResult, Owner owner, Model model) {
         if (bindingResult.hasErrors()) {
-            pet.setOwner(owner);
-            model.addAttribute("pet", pet);
+            log.info("Pet has errors, returning to same page!");
             return CREATE_OR_UPDATE_PET_FORM;
         }
         owner.addPet(pet);

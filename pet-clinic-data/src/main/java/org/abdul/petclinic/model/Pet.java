@@ -46,6 +46,7 @@ public class Pet extends BaseEntity {
         if (visit.isNew()) {
             addPetInternal(visit);
         }
+        visit.setPet(this);
     }
 
     private void addPetInternal(Visit visit) {
