@@ -27,7 +27,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class OwnerControllerTest {
     private static final String FIRST_NAME = "Mohideen Abdul Katheer";
     private static final String LAST_NAME = "Mohamed Amsa";
-    private static final String CREATE_OR_UPDATE_OWNER_FORM = "owners/createOrUpdateOwnerForm";
+    private static final String CREATE_OR_UPDATE_OWNER_FORM_VIEW = "owners/createOrUpdateOwnerForm";
+    private static final String FIND_OWNERS_VIEW = "owners/findOwners";
+    private static final String OWNER_DETAILS_VIEW = "owners/ownerDetails";
+    private static final String LIST_OWNERS_VIEW = "owners/ownersList";
+    private static final String NEW_OWNER_URI = "/owners/new";
+    private static final String SELECTED_OWNERS_URI = "/owners/selected";
+    private static final String ALL_OWNERS_URI = "/owners";
+    private static final String FIND_OWNER_URI = "/owners/find";
 
     @Mock
     private OwnerService ownerService;
@@ -51,7 +58,7 @@ class OwnerControllerTest {
         //given
         when(ownerService.findAll()).thenReturn(owners);
         //then
-        mockMvc.perform(get("/owners"))
+        mockMvc.perform(get(ALL_OWNERS_URI))
                 .andExpect(status().is(200))
                 .andExpect(view().name("owners/index"))
                 .andExpect(model().attribute("owners", Matchers.hasSize(3)));
@@ -66,7 +73,7 @@ class OwnerControllerTest {
         //when
         mockMvc.perform(get("/owners/1"))
                 .andExpect(status().is(200))
-                .andExpect(view().name("owners/ownerDetails"))
+                .andExpect(view().name(OWNER_DETAILS_VIEW))
                 .andExpect(model().attribute("owner", hasProperty("id", is(1L))))
                 .andExpect(model().attribute("owner", hasProperty("firstName", is(FIRST_NAME))));
     }
@@ -74,9 +81,9 @@ class OwnerControllerTest {
     @Test
     public void initFindOwnerForm() throws Exception {
         //when
-        mockMvc.perform(get("/owners/find"))
+        mockMvc.perform(get(FIND_OWNER_URI))
                 .andExpect(status().is(200))
-                .andExpect(view().name("owners/findOwners"));
+                .andExpect(view().name(FIND_OWNERS_VIEW));
     }
 
     @Test
@@ -86,9 +93,9 @@ class OwnerControllerTest {
         when(ownerService.findByLastNameLike(LAST_NAME)).thenReturn(Collections.emptyList());
 
         //when
-        mockMvc.perform(get("/owners/selected").param("lastName", LAST_NAME))
+        mockMvc.perform(get(SELECTED_OWNERS_URI).param("lastName", LAST_NAME))
                 .andExpect(status().is(200))
-                .andExpect(view().name("owners/findOwners"))
+                .andExpect(view().name(FIND_OWNERS_VIEW))
                 .andExpect(model().hasErrors());
     }
 
@@ -103,7 +110,7 @@ class OwnerControllerTest {
         when(ownerService.findByLastNameLike("Mohamed Amsa")).thenReturn(Collections.singletonList(owner));
 
         //when
-        mockMvc.perform(get("/owners/selected").param("lastName", LAST_NAME))
+        mockMvc.perform(get(SELECTED_OWNERS_URI).param("lastName", LAST_NAME))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/owners/1"));
     }
@@ -124,18 +131,18 @@ class OwnerControllerTest {
         when(ownerService.findByLastNameLike(LAST_NAME)).thenReturn(Arrays.asList(owner1, owner2));
 
         //when
-        mockMvc.perform(get("/owners/selected").param("lastName", LAST_NAME))
+        mockMvc.perform(get(SELECTED_OWNERS_URI).param("lastName", LAST_NAME))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(model().attribute("selections", hasSize(2)))
-                .andExpect(view().name("owners/ownersList"));
+                .andExpect(view().name(LIST_OWNERS_VIEW));
     }
 
     @Test
     public void testInitCreateForm() throws Exception {
         //then
-        mockMvc.perform(get("/owners/new"))
+        mockMvc.perform(get(NEW_OWNER_URI))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(view().name(CREATE_OR_UPDATE_OWNER_FORM))
+                .andExpect(view().name(CREATE_OR_UPDATE_OWNER_FORM_VIEW))
                 .andExpect(model().attributeExists("owner"));
     }
 
@@ -146,7 +153,7 @@ class OwnerControllerTest {
         when(ownerService.save(owner)).thenReturn(owner);
 
         //then
-        mockMvc.perform(post("/owners/new").flashAttr("owner", owner))
+        mockMvc.perform(post(NEW_OWNER_URI).flashAttr("owner", owner))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/owners/1"));
     }
@@ -159,7 +166,7 @@ class OwnerControllerTest {
         //then
         mockMvc.perform(get("/owners/1/edit"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(view().name(CREATE_OR_UPDATE_OWNER_FORM))
+                .andExpect(view().name(CREATE_OR_UPDATE_OWNER_FORM_VIEW))
                 .andExpect(model().attribute("owner", hasProperty("id", is(1L))));
     }
 
