@@ -19,7 +19,7 @@ public class VetController {
     @GetMapping({"", "/", "/index", "/index.htm", "/index.html"})
     public String listOfVets(Model response) {
         response.addAttribute("vets", vetService.findAll());
-        return "vets/index";
+        return "vets/vetList";
     }
 
 }
